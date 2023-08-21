@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-import "./assets/fonts/fonts.css";
+
 
 // Create a theme instance.
 const theme = createTheme({
