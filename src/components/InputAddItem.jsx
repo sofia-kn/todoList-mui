@@ -8,14 +8,13 @@ function InputAddItem() {
     <>
       <FormControl
         sx={{
-          position: "absolute",
-          top: "10rem",
+          
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           flexDirection: "row",
           bgcolor: "white",
-          width: "90%",
+          width: "100%",
           borderRadius: "4px",
           mb: "1rem",
           paddingLeft: "3rem",
@@ -24,18 +23,17 @@ function InputAddItem() {
         <div
           style={{
             display: "flex",
-            flexDirection: "row",
-            justifyContent: "flex-start",
+            flexDirection: "row",   
             alignItems: "center",
             flexBasis: "80%",
           }}
         >
           <Typography
             variant="subtitle1"
-            width={20}
-            height={20}
+            width={27}
+            height={25}
             borderRadius="50%"
-            mr={10}
+            mr={2}
             border="1px solid gray"
           ></Typography>
           <Input placeholder="creat a new todo ..." fullWidth={true} 
