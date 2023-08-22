@@ -52,11 +52,7 @@ const theme = createTheme({
     },
     subtitle1: {
       fontSize: "16.2px",
-      fontWeight: "700",
-    },
-
-    font: {
-      family: "[Josefin Sans]",
+      fontWeight: "400",
     },
   },
 });

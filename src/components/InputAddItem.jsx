@@ -35,7 +35,7 @@ function InputAddItem() {
             width={20}
             height={20}
             borderRadius="50%"
-            mr="11px"
+            mr={10}
             border="1px solid gray"
           ></Typography>
           <Input placeholder="creat a new todo ..." fullWidth={true} 
