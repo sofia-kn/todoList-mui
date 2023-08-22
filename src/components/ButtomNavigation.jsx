@@ -5,8 +5,7 @@ import { Box } from "@mui/material";
 function ButtomNavigation() {
   return (
     <Box
-    //   position="absolute"
-    //   top={330}
+   
       bgcolor="white"
       width="100%"
       borderTop="1px solid lightgray"

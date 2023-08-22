@@ -10,11 +10,11 @@ function App() {
       <div
         style={{
           width: "100%",
-          height: "400px",
+          minHeight: "100vh",
           backgroundImage: "url('/assets/images/bg-mobile-light.jpg')",
           backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundSize: "contain",
+          backgroundPosition: "top left",
         }}
       >
         <Container>
@@ -77,6 +77,7 @@ function App() {
           </Box>
           <ButtomNavigation />
         </Container>
+ 
       </div>
     </>
   );

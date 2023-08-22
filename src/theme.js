@@ -16,8 +16,11 @@ const theme = createTheme({
       styleOverrides: {
         html: {
           fontSize: "62.5%",
-          backgroundColor:'#e4e5f1',
         },
+        body:{
+          backgroundColor:'#e4e5f1',
+
+        }
       },
     },
   },
