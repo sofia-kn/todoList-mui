@@ -3,12 +3,25 @@ import { Button, Typography } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import React from "react";
 
-function InputAddItem() {
+
+function InputAddItem({ inputValue, setInputValue, setData, data }) {
+  const buttonHandler = () => {
+    // console.log("click shod");
+    setData([...data, inputValue]);
+    setInputValue("");
+    console.log(data);
+  };
+  const keyUpHandler = (e) => {
+    if(e.keyCode === 13) {
+      buttonHandler()
+    }
+
+  };
+
   return (
     <>
       <FormControl
         sx={{
-          
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -18,12 +31,13 @@ function InputAddItem() {
           borderRadius: "4px",
           mb: "1rem",
           paddingLeft: "3rem",
+          borderBottom: "2px solid lightgray",
         }}
       >
         <div
           style={{
             display: "flex",
-            flexDirection: "row",   
+            flexDirection: "row",
             alignItems: "center",
             flexBasis: "80%",
           }}
@@ -36,13 +50,18 @@ function InputAddItem() {
             mr={2}
             border="1px solid gray"
           ></Typography>
-          <Input placeholder="creat a new todo ..." fullWidth={true} 
-            
+          <Input
+            placeholder="creat a new todo ..."
+            fullWidth={true}
+            onChange={(e) => setInputValue(e.target.value)}
+            value={inputValue}
+            onKeyUp={keyUpHandler}
           ></Input>
         </div>
         <Button
           color="dark"
           sx={{ fontSize: "2rem", fontWeight: "700", flexBasis: "20%" }}
+          onClick={buttonHandler}
         >
           +
         </Button>

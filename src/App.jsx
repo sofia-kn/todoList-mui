@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Box, Typography } from "@mui/material";
 import InputAddItem from "./components/InputAddItem";
 import NightlightRoundSharpIcon from "@mui/icons-material/NightlightRoundSharp";
 import ButtomNavigation from "./components/ButtomNavigation";
 import Container from "@mui/material/Container";
+import AddItemList from "./components/AddItemList";
+
 function App() {
+  const [inputValue, setInputValue] = useState("");
+  const [data, setData] = useState([]);
+  const [addItemList, setAddItemList] = useState(true);
+
   return (
     <>
       <div
@@ -18,7 +24,13 @@ function App() {
         }}
       >
         <Container>
-          <div style={{ display: "flex", justifyContent: "space-between" , padding:'4rem 0 3rem' }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              padding: "4rem 0 3rem",
+            }}
+          >
             <Typography
               variant="h1"
               textTransform="uppercase"
@@ -35,32 +47,50 @@ function App() {
               }}
             ></NightlightRoundSharpIcon>
           </div>
-          <InputAddItem />
-          <Box
-            width="100%"
-            height={100}
-            bgcolor="white"
-            
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            color="dark"
-            fontSize={20}
-            sx={{ boxShadow: "inset 0 0 5px px lightGray", borderTopLeftRadius:'4px', borderTopRightRadius:'4px' }}
-            
-          >
-            No todo items left!
-          </Box>
-          <Box
+          <InputAddItem
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            data={data}
+            setData={setData}
+          />
+          {addItemList ? (
+            <Box
+              width="100%"
+              height={100}
+              bgcolor="white"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              color="dark"
+              fontSize={20}
+              sx={{
+                boxShadow: "inset 0 0 5px px lightGray",
+                borderTopLeftRadius: "4px",
+                borderTopRightRadius: "4px",
+              }}
+              border="1px solid lightGray"
+            >
+              No todo items left!
+            </Box>
+           
+              ) 
           
+          : (
+            data.map((dataItem) => <AddItemList data={dataItem} />)
+          )}
+
+          <Box
             bgcolor="white"
             width="100%"
-            borderTop="2px solid lightgray"
             display="flex"
             justifyContent="space-between"
             alignItems="center"
             padding={1.5}
             marginBottom={2}
+            sx={{
+              borderBottomLeftRadius: "4px",
+              borderBottomRightRadius: "4px",
+            }}
           >
             <Typography variant="subtitle1" color="gray.main" fontSize={13}>
               0 items left
@@ -77,7 +107,6 @@ function App() {
           </Box>
           <ButtomNavigation />
         </Container>
- 
       </div>
     </>
   );

@@ -1,6 +1,5 @@
 import { createTheme } from "@mui/material/styles";
 
-
 // Create a theme instance.
 const theme = createTheme({
   components: {
@@ -17,10 +16,9 @@ const theme = createTheme({
         html: {
           fontSize: "62.5%",
         },
-        body:{
-          backgroundColor:'#e4e5f1',
-
-        }
+        body: {
+          backgroundColor: "#e4e5f1",
+        },
       },
     },
   },
@@ -52,6 +50,7 @@ const theme = createTheme({
     },
     body2: {
       fontSize: "16.2px",
+      fontWeight: "700",
     },
     subtitle1: {
       fontSize: "16.2px",
