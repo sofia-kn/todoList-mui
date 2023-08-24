@@ -5,11 +5,38 @@ import NightlightRoundSharpIcon from "@mui/icons-material/NightlightRoundSharp";
 import ButtomNavigation from "./components/ButtomNavigation";
 import Container from "@mui/material/Container";
 import AddItemList from "./components/AddItemList";
+import { useEffect } from "react";
+import axios from "axios";
+
 
 function App() {
   const [inputValue, setInputValue] = useState("");
   const [data, setData] = useState([]);
-  const [addItemList, setAddItemList] = useState(true);
+  // const [addItemList, setAddItemList] = useState(true);
+  
+  const axiosGet =()=> {
+    axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
+  }
+
+
+  useEffect(() => {
+    axiosGet()
+  }, []);
+
+  const addItemHandler = () => {
+    axios
+      .post("http://localhost:3031/todos", { inputValue: inputValue })
+      .then((res) =>
+        alert("item added to list")
+     
+       )
+      .catch((err) => console.log(err))
+      .then(
+        axiosGet
+      )
+  };
+
+  
 
   return (
     <>
@@ -52,8 +79,14 @@ function App() {
             setInputValue={setInputValue}
             data={data}
             setData={setData}
+            onAddItem={addItemHandler}
           />
-          {addItemList ? (
+          
+          {data.length  ? (
+            data.map((dataItem) => (
+              <AddItemList data={dataItem} key={dataItem.inputValue} />
+            ))
+          ) : (
             <Box
               width="100%"
               height={100}
@@ -72,11 +105,6 @@ function App() {
             >
               No todo items left!
             </Box>
-           
-              ) 
-          
-          : (
-            data.map((dataItem) => <AddItemList data={dataItem} />)
           )}
 
           <Box

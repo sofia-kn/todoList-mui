@@ -4,16 +4,18 @@ import FormControl from "@mui/material/FormControl";
 import React from "react";
 
 
-function InputAddItem({ inputValue, setInputValue, setData, data }) {
+function InputAddItem({ inputValue, setInputValue, setData, data, onAddItem }) {
   const buttonHandler = () => {
     // console.log("click shod");
     setData([...data, inputValue]);
     setInputValue("");
-    console.log(data);
+    // console.log(data);
+    onAddItem()
   };
   const keyUpHandler = (e) => {
     if(e.keyCode === 13) {
       buttonHandler()
+    
     }
 
   };

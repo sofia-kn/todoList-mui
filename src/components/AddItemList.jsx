@@ -35,8 +35,8 @@ function AddItemList({data}) {
         mr={2}
         border="1px solid gray"
       ></Typography>
-     {...data}
-      
+    
+      {data.inputValue}
     </div>
     <Button
       color="gray"

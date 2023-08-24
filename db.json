@@ -1,0 +1,20 @@
+{
+  "todos": [
+    {
+      "inputValue": "creat",
+      "id": 1
+    },
+    {
+      "inputValue": "npm",
+      "id": 2
+    },
+    {
+      "inputValue": "css",
+      "id": 3
+    },
+    {
+      "inputValue": "css2",
+      "id": 4
+    }
+  ]
+}
