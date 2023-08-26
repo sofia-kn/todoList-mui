@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Box, Typography } from "@mui/material";
+import { Link, Box, Typography, Button } from "@mui/material";
 import InputAddItem from "./components/InputAddItem";
 import NightlightRoundSharpIcon from "@mui/icons-material/NightlightRoundSharp";
 import ButtomNavigation from "./components/ButtomNavigation";
@@ -8,35 +8,29 @@ import AddItemList from "./components/AddItemList";
 import { useEffect } from "react";
 import axios from "axios";
 
-
 function App() {
   const [inputValue, setInputValue] = useState("");
   const [data, setData] = useState([]);
   // const [addItemList, setAddItemList] = useState(true);
-  
-  const axiosGet =()=> {
-    axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
-  }
 
+  const axiosGet = () => {
+    axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
+  };
 
   useEffect(() => {
-    axiosGet()
+    axiosGet();
   }, []);
 
   const addItemHandler = () => {
     axios
       .post("http://localhost:3031/todos", { inputValue: inputValue })
-      .then((res) =>
-        alert("item added to list")
-     
-       )
+      .then((res) => alert("item added to list"))
       .catch((err) => console.log(err))
-      .then(
-        axiosGet
-      )
+      .then(axiosGet);
   };
-
-  
+  const clearCompletedHandler = () => {
+   console.log('delete completed');
+  };
 
   return (
     <>
@@ -81,10 +75,14 @@ function App() {
             setData={setData}
             onAddItem={addItemHandler}
           />
-          
-          {data.length  ? (
+
+          {data.length ? (
             data.map((dataItem) => (
-              <AddItemList data={dataItem} key={dataItem.inputValue} />
+              <AddItemList
+                data={dataItem}
+                key={dataItem.id}
+                setData={setData}
+              />
             ))
           ) : (
             <Box
@@ -113,24 +111,24 @@ function App() {
             display="flex"
             justifyContent="space-between"
             alignItems="center"
-            padding={1.5}
+            padding="1rem 1.5rem"
             marginBottom={2}
             sx={{
               borderBottomLeftRadius: "4px",
               borderBottomRightRadius: "4px",
             }}
           >
-            <Typography variant="subtitle1" color="gray.main" fontSize={13}>
-              0 items left
+            <Typography variant="subtitle1" color="gray.main">
+              {data.length} items left
             </Typography>
             <Typography variant="subtitle1">
-              <Link
-                sx={{ textDecoration: "none", cursor: "pointer" }}
-                color="gray.main"
-                fontSize={13}
+              <Button
+                onClick={clearCompletedHandler}
+                color="gray"
+                sx={{ p: "1rem" }}
               >
                 Clear Completed
-              </Link>
+              </Button>
             </Typography>
           </Box>
           <ButtomNavigation />

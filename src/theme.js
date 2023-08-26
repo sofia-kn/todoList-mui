@@ -53,9 +53,15 @@ const theme = createTheme({
       fontWeight: "700",
     },
     subtitle1: {
-      fontSize: "16.2px",
+      fontSize: "12.6px",
       fontWeight: "400",
     },
+    button:{
+      fontSize: "12.6px",
+      fontWeight: "400",
+      
+
+    }
   },
 });
 

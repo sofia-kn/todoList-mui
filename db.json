@@ -1,8 +1,12 @@
 {
   "todos": [
     {
-      "inputValue": "react",
-      "id": 1
+      "inputValue": "js",
+      "id": 8
+    },
+    {
+      "inputValue": "css",
+      "id": 9
     }
   ]
 }
