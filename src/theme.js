@@ -1,5 +1,4 @@
 import { createTheme } from "@mui/material/styles";
-
 // Create a theme instance.
 const theme = createTheme({
   components: {
@@ -20,6 +19,7 @@ const theme = createTheme({
           backgroundColor: "#e4e5f1",
         },
       },
+      
     },
   },
   palette: {
