@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+import font from '../public/assets/fonts/Roboto-Regular.woff'
 // Create a theme instance.
 const theme = createTheme({
   components: {
@@ -18,6 +19,13 @@ const theme = createTheme({
         body: {
           backgroundColor: "#e4e5f1",
         },
+        '@font-face':{
+          fontFamily:'Roboto',
+          fontStyle:'normal',
+          fontWeight:500,
+          src:`url(${font}) format('woff')`,
+          fontDisplay:'swap'
+        }
       },
       
     },
@@ -41,6 +49,7 @@ const theme = createTheme({
     },
   },
   typography: {
+    fontFamily:'Roboto',
     h1: {
       fontSize: "3rem",
       fontWeight: "700",

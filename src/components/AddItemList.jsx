@@ -1,4 +1,4 @@
-import Input from "@mui/material/Input";
+
 import { Button, Typography } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import React from "react";
@@ -6,12 +6,15 @@ import axios from "axios";
 
 function AddItemList({ data, setData }) {
   const deleteHandler = () => {
-    axios.delete("http://localhost:3031/todos/" + data.id).then((res) => 
-      alert("item deleted")
-    );
     axios
-      .get("http://localhost:3031/todos")
-      .then((res) => console.log(res.data));
+      .delete("http://localhost:3031/todos/" + data.id)
+      .then(
+        axios
+        .get("http://localhost:3031/todos")
+        .then((res) => console.log(res.data))
+        )
+    //     // .then(alert("item deleted"))
+    console.log('delete shod')
   };
   return (
     <FormControl
@@ -43,6 +46,7 @@ function AddItemList({ data, setData }) {
           borderRadius="50%"
           mr={2}
           border="1px solid gray"
+          // onClick={() => console.log("click shod")}
         ></Typography>
 
         {data.inputValue}

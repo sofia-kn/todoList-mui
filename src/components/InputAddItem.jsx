@@ -5,8 +5,10 @@ import React from "react";
 
 
 function InputAddItem({ inputValue, setInputValue, setData, data, onAddItem }) {
+  console.log(data)
   const buttonHandler = () => {
     // console.log("click shod");
+    
     setData([...data, inputValue]);
     setInputValue("");
     // console.log(data);
@@ -52,6 +54,7 @@ function InputAddItem({ inputValue, setInputValue, setData, data, onAddItem }) {
             mr={2}
             border="1px solid gray"
           ></Typography>
+          
           <Input
             placeholder="creat a new todo ..."
             fullWidth={true}

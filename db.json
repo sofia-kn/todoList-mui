@@ -1,12 +1,3 @@
 {
-  "todos": [
-    {
-      "inputValue": "js",
-      "id": 8
-    },
-    {
-      "inputValue": "css",
-      "id": 9
-    }
-  ]
+  "todos": []
 }

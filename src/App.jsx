@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link, Box, Typography, Button } from "@mui/material";
+import { Typography, Button, Grid, Container } from "@mui/material";
+import Box from "@mui/material/Box";
 import InputAddItem from "./components/InputAddItem";
 import NightlightRoundSharpIcon from "@mui/icons-material/NightlightRoundSharp";
 import ButtomNavigation from "./components/ButtomNavigation";
-import Container from "@mui/material/Container";
 import AddItemList from "./components/AddItemList";
 import { useEffect } from "react";
 import axios from "axios";
+import { display } from "@mui/system";
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -23,28 +24,40 @@ function App() {
 
   const addItemHandler = () => {
     axios
-      .post("http://localhost:3031/todos", { inputValue: inputValue })
-      .then((res) => alert("item added to list"))
+      .post("http://localhost:3031/todos", {
+        inputValue: inputValue,
+        isCompleted: false,
+      })
       .catch((err) => console.log(err))
-      .then(axiosGet);
+      .then(axiosGet)
+      .then(alert("item added to list"));
   };
   const clearCompletedHandler = () => {
-   console.log('delete completed');
+    data.map((dataItem) => {
+      axios.delete("http://localhost:3031/todos/" + dataItem.id).then(axiosGet);
+      console.log("delete all");
+    });
   };
 
   return (
-    <>
-      <div
-        style={{
-          width: "100%",
+    <Grid container display="flex" justifyContent="center" alignItems="center">
+      <Grid
+        item
+        xs={12}
+        // backgroundImage={{md:"url('/assets/images/bg-mobile-dark.jpg')"}}
+        sx={(theme) => ({
           minHeight: "100vh",
-          backgroundImage: "url('/assets/images/bg-mobile-light.jpg')",
+          backgroundImage: {
+            xs: "url('/assets/images/bg-mobile-light.jpg')",
+            md: "url('/assets/images/bg-desktop-light.jpg')",
+          },
           backgroundRepeat: "no-repeat",
           backgroundSize: "contain",
           backgroundPosition: "top left",
-        }}
+          ...theme.typography.body2,
+        })}
       >
-        <Container>
+        <Grid item md={6} margin='0 auto' padding={{xs:'2.5rem'}}>
           <div
             style={{
               display: "flex",
@@ -77,13 +90,16 @@ function App() {
           />
 
           {data.length ? (
-            data.map((dataItem) => (
-              <AddItemList
-                data={dataItem}
-                key={dataItem.id}
-                setData={setData}
-              />
-            ))
+            data.map((dataItem, i) => {
+              console.log(dataItem);
+              return (
+                <AddItemList
+                  data={dataItem}
+                  key={dataItem.id}
+                  setData={setData}
+                />
+              );
+            })
           ) : (
             <Box
               width="100%"
@@ -132,9 +148,9 @@ function App() {
             </Typography>
           </Box>
           <ButtomNavigation />
-        </Container>
-      </div>
-    </>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 
