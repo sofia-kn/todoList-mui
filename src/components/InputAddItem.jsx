@@ -3,24 +3,19 @@ import { Button, Typography } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import React from "react";
 
-
 function InputAddItem({ inputValue, setInputValue, setData, data, onAddItem }) {
-  console.log(data)
   const buttonHandler = () => {
-    // console.log("click shod");
-    
-    setData([...data, inputValue]);
+    setData([...data]);
     setInputValue("");
-    // console.log(data);
-    onAddItem()
+
+    onAddItem();
   };
   const keyUpHandler = (e) => {
-    if(e.keyCode === 13) {
-      buttonHandler()
-    
+    if (e.keyCode === 13) {
+      buttonHandler();
     }
-
   };
+ 
 
   return (
     <>
@@ -53,8 +48,9 @@ function InputAddItem({ inputValue, setInputValue, setData, data, onAddItem }) {
             borderRadius="50%"
             mr={2}
             border="1px solid gray"
+            
           ></Typography>
-          
+
           <Input
             placeholder="creat a new todo ..."
             fullWidth={true}

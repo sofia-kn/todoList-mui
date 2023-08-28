@@ -12,7 +12,8 @@ import { display } from "@mui/system";
 function App() {
   const [inputValue, setInputValue] = useState("");
   const [data, setData] = useState([]);
-  // const [addItemList, setAddItemList] = useState(true);
+  const [isCompleted , setIsCompleted] = useState(false)
+
 
   const axiosGet = () => {
     axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
@@ -35,7 +36,7 @@ function App() {
   const clearCompletedHandler = () => {
     data.map((dataItem) => {
       axios.delete("http://localhost:3031/todos/" + dataItem.id).then(axiosGet);
-      console.log("delete all");
+    
     });
   };
 
@@ -44,7 +45,6 @@ function App() {
       <Grid
         item
         xs={12}
-        // backgroundImage={{md:"url('/assets/images/bg-mobile-dark.jpg')"}}
         sx={(theme) => ({
           minHeight: "100vh",
           backgroundImage: {
@@ -57,7 +57,7 @@ function App() {
           ...theme.typography.body2,
         })}
       >
-        <Grid item md={6} margin='0 auto' padding={{xs:'2.5rem'}}>
+        <Grid item md={6} lg={4.5} margin="0 auto" padding={{ xs: "2.5rem" }}>
           <div
             style={{
               display: "flex",
@@ -90,13 +90,15 @@ function App() {
           />
 
           {data.length ? (
-            data.map((dataItem, i) => {
-              console.log(dataItem);
+            data.map((dataItem) => {
               return (
                 <AddItemList
                   data={dataItem}
                   key={dataItem.id}
                   setData={setData}
+                  axiosGet={axiosGet}
+                  isCompleted={isCompleted}
+                  setIsCompleted={setIsCompleted}
                 />
               );
             })

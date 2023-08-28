@@ -1,3 +1,9 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "inputValue": "react",
+      "isCompleted": false,
+      "id": 1
+    }
+  ]
 }
