@@ -3,9 +3,14 @@ import React from "react";
 import { Box } from "@mui/material";
 
 function ButtomNavigation() {
+
+  // const completedButtonHandler = ()=> {
+  //    data.isCompleted == true ? setCompletedButton(data) : ''
+  // }
+
+
   return (
     <Box
-   
       bgcolor="white"
       width="100%"
       borderTop="1px solid lightgray"
@@ -37,6 +42,7 @@ function ButtomNavigation() {
         color="gray.main"
         variant="body2"
         fontWeight={700}
+        // onClick={completedButtonHandler}
       >
         Completed
       </Link>
