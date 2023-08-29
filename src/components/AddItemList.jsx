@@ -9,7 +9,7 @@ import axios from "axios";
 // );
 
 function AddItemList({ data, setData, axiosGet, isCompleted, setIsCompleted }) {
-  console.log('omad');
+  // console.log('omad');
   const deleteHandler = () => {
     axios.delete("http://localhost:3031/todos/" + data.id).then(axiosGet);
 

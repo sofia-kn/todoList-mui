@@ -17,7 +17,7 @@ function App() {
   const [inputValue, setInputValue] = useState("");
   const [data, setData] = useState([]);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [status, setStatus] = useState("All");
+  const [status, setStatus] = useState("");
 
   const axiosGet = () => {
     axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
@@ -66,6 +66,9 @@ function App() {
   const dataIsCompletedFilter = data.filter(
     (dataItem) => !dataItem.isCompleted
   );
+ const dataStatus = data.filter((item) => (
+  status === '' ? item : item.isCompleted == status
+))  
 
   return (
     <Grid container display="flex" justifyContent="center" alignItems="center">
@@ -117,7 +120,7 @@ function App() {
           />
 
           {data.length ? (
-            data.map((dataItem) => {
+            dataStatus.map((dataItem) => {
               return (
                 <AddItemList
                   data={dataItem}
@@ -176,7 +179,7 @@ function App() {
               </Button>
             </Typography>
           </Box>
-          <ButtomNavigation />
+          <ButtomNavigation status={status} setStatus={setStatus} data={data}/>
         </Grid>
       </Grid>
     </Grid>
