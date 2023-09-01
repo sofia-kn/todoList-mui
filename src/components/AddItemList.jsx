@@ -1,4 +1,5 @@
-import { Button, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import React from "react";
 import axios from "axios";
@@ -8,7 +9,7 @@ import axios from "axios";
 //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5a3FibWh2dGtjcHl0eWFsZ2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTMyNTEwODgsImV4cCI6MjAwODgyNzA4OH0.g9K0-nobipeTKlouZK6YH9cZwhpLO6RExzmcrdMOVtY"
 // );
 
-function AddItemList({ data, setData, axiosGet, isCompleted, setIsCompleted }) {
+function AddItemList({ data, setData, axiosGet, isCompleted, setIsCompleted, darkMode }) {
   // console.log('omad');
   const deleteHandler = () => {
     axios.delete("http://localhost:3031/todos/" + data.id).then(axiosGet);
@@ -54,6 +55,7 @@ function AddItemList({ data, setData, axiosGet, isCompleted, setIsCompleted }) {
         borderTopRightRadius: "4px",
         borderBottom: "1px solid lightgray",
         paddingLeft: "3rem",
+        bgcolor: darkMode === 'dark' ? '#25273c' : 'white',
       }}
     >
       <div

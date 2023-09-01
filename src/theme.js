@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-import font from '../public/assets/fonts/Roboto-Regular.woff'
+import font from "../public/assets/fonts/Roboto-Regular.woff";
 // Create a theme instance.
 const theme = createTheme({
   components: {
@@ -17,20 +17,21 @@ const theme = createTheme({
           fontSize: "62.5%",
         },
         body: {
-          backgroundColor: "#e4e5f1",
+         color:'#000'
+          
         },
-        '@font-face':{
-          fontFamily:'Roboto',
-          fontStyle:'normal',
-          fontWeight:500,
-          src:`url(${font}) format('woff')`,
-          fontDisplay:'swap'
-        }
+        "@font-face": {
+          fontFamily: "Roboto",
+          fontStyle: "normal",
+          fontWeight: 500,
+          src: `url(${font}) format('woff')`,
+          fontDisplay: "swap",
+        },
       },
-      
     },
   },
   palette: {
+    mode:'dark',
     primary: {
       main: "#3a7bfd",
     },
@@ -43,13 +44,13 @@ const theme = createTheme({
     gray: {
       main: "#777a92",
     },
-    dark: {
+    black: {
       main: "#161722",
       inputColor: "#25273c",
     },
   },
   typography: {
-    fontFamily:'Roboto',
+    fontFamily: "Roboto",
     h1: {
       fontSize: "3rem",
       fontWeight: "700",
@@ -65,13 +66,13 @@ const theme = createTheme({
       fontSize: "12.6px",
       fontWeight: "400",
     },
-    button:{
+    button: {
       fontSize: "12.6px",
       fontWeight: "400",
-      
-
-    }
+    },
   },
 });
+
+
 
 export default theme;

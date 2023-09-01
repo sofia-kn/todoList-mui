@@ -1,23 +1,31 @@
-import React, { useState } from "react";
-import { Typography, Button, Grid, Container } from "@mui/material";
+import React, { useState, useEffect, useMemo } from "react";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import InputAddItem from "./components/InputAddItem";
 import NightlightRoundSharpIcon from "@mui/icons-material/NightlightRoundSharp";
+import LightModeIcon from "@mui/icons-material/LightMode";
 import ButtomNavigation from "./components/ButtomNavigation";
 import AddItemList from "./components/AddItemList";
-import { useEffect } from "react";
 import axios from "axios";
-import { createClient } from "@supabase/supabase-js";
-const supabase = createClient(
-  "https://bykqbmhvtkcpytyalgbz.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5a3FibWh2dGtjcHl0eWFsZ2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTMyNTEwODgsImV4cCI6MjAwODgyNzA4OH0.g9K0-nobipeTKlouZK6YH9cZwhpLO6RExzmcrdMOVtY"
-);
+import theme from "./theme";
+
+// import { createClient } from "@supabase/supabase-js";
+// const supabase = createClient(
+//   "https://bykqbmhvtkcpytyalgbz.supabase.co",
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5a3FibWh2dGtjcHl0eWFsZ2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTMyNTEwODgsImV4cCI6MjAwODgyNzA4OH0.g9K0-nobipeTKlouZK6YH9cZwhpLO6RExzmcrdMOVtY"
+// );
 
 function App() {
   const [inputValue, setInputValue] = useState("");
   const [data, setData] = useState([]);
   const [isCompleted, setIsCompleted] = useState(false);
   const [status, setStatus] = useState("");
+  const [darkMode, setDarkMode] = useState(theme.palette.mode);
+
+ 
+
 
   const axiosGet = () => {
     axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
@@ -66,24 +74,45 @@ function App() {
   const dataIsCompletedFilter = data.filter(
     (dataItem) => !dataItem.isCompleted
   );
- const dataStatus = data.filter((item) => (
-  status === '' ? item : item.isCompleted == status
-))  
+  const dataStatus = data.filter((item) =>
+    status === "" ? item : item.isCompleted == status
+  );
+  
+  const darkModeHandler = () => {
+
+    setDarkMode((prevMode) =>
+    prevMode === 'light' ? 'dark' : 'light',
+  )  };
 
   return (
-    <Grid container display="flex" justifyContent="center" alignItems="center">
+    <Grid
+      container
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      sx={(theme) => ({
+        bgcolor:
+          darkMode === "dark" ? "#161722" : "#e4e5f1",
+          color: darkMode === 'dark' ? 'text.secondary' : '',
+          
+      })}
+    >
       <Grid
         item
         xs={12}
         sx={(theme) => ({
           minHeight: "100vh",
           backgroundImage: {
-            xs: "url('/assets/images/bg-mobile-light.jpg')",
-            md: "url('/assets/images/bg-desktop-light.jpg')",
+            xs: darkMode === 'dark'
+              ? "url('/assets/images/bg-mobile-dark.jpg')"
+              : "url('/assets/images/bg-mobile-light.jpg')",
+            md: darkMode === 'dark'
+              ? "url('/assets/images/bg-desktop-dark.jpg')"
+              : "url('/assets/images/bg-desktop-light.jpg')",
           },
           backgroundRepeat: "no-repeat",
           backgroundSize: "contain",
-          backgroundPosition: "top left",
+          backgroundPosition: "top left",  
           ...theme.typography.body2,
         })}
       >
@@ -103,13 +132,25 @@ function App() {
             >
               todo
             </Typography>
-            <NightlightRoundSharpIcon
-              sx={{
-                right: "2rem",
-                fontSize: "3.5rem",
-                color: "white",
-              }}
-            ></NightlightRoundSharpIcon>
+            <Box onClick={darkModeHandler} sx={{cursor:'pointer'}} >
+              <NightlightRoundSharpIcon
+                sx={{
+                  right: "2rem",
+                  fontSize: "3.5rem",
+                  color: "white",
+                  display: darkMode ? "none" : "block",
+                }}
+              ></NightlightRoundSharpIcon>
+
+              <LightModeIcon
+                sx={{
+                  right: "2rem",
+                  fontSize: "3.5rem",
+                  color: "white",
+                  display: darkMode ? "block" : "none",
+                }}
+              ></LightModeIcon>
+            </Box>
           </div>
           <InputAddItem
             inputValue={inputValue}
@@ -117,6 +158,7 @@ function App() {
             data={data}
             setData={setData}
             onAddItem={addItemHandler}
+            darkMode={darkMode}
           />
 
           {data.length ? (
@@ -129,6 +171,7 @@ function App() {
                   axiosGet={axiosGet}
                   isCompleted={isCompleted}
                   setIsCompleted={setIsCompleted}
+                  darkMode={darkMode}
                 />
               );
             })
@@ -136,18 +179,20 @@ function App() {
             <Box
               width="100%"
               height={100}
-              bgcolor="white"
+            
               display="flex"
               justifyContent="center"
               alignItems="center"
-              color="dark"
+              
               fontSize={20}
               sx={{
-                boxShadow: "inset 0 0 5px px lightGray",
+                boxShadow: "inset 0 0 5px px lightgray",
                 borderTopLeftRadius: "4px",
                 borderTopRightRadius: "4px",
+                bgcolor: darkMode === 'dark' ? '#25273c' : 'white',
+                // borderBottom:"1px solid lighGray",
               }}
-              border="1px solid lightGray"
+              borderBottom='1px solid lightgray'
             >
               No todo items left!
             </Box>
@@ -164,6 +209,8 @@ function App() {
             sx={{
               borderBottomLeftRadius: "4px",
               borderBottomRightRadius: "4px",
+              bgcolor: darkMode === 'dark' ? '#25273c' : 'white',
+
             }}
           >
             <Typography variant="subtitle1" color="gray.main">
@@ -179,7 +226,7 @@ function App() {
               </Button>
             </Typography>
           </Box>
-          <ButtomNavigation status={status} setStatus={setStatus} data={data}/>
+          <ButtomNavigation status={status} setStatus={setStatus} data={data} darkMode={darkMode}/>
         </Grid>
       </Grid>
     </Grid>

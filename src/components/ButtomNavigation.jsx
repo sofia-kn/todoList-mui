@@ -1,8 +1,9 @@
 import Link from "@mui/material/Link";
 import React from "react";
-import { Box } from "@mui/material";
+import  Box  from "@mui/material/Box";
 
-function ButtomNavigation({ status, setStatus }) {
+function ButtomNavigation({ status, setStatus, darkMode }) {
+  
   const activeHandler = () => {
     setStatus(false);
   };
@@ -17,11 +18,13 @@ function ButtomNavigation({ status, setStatus }) {
     <Box
       bgcolor="white"
       width="100%"
-      borderTop="1px solid lightgray"
       display="flex"
       justifyContent="space-evenly"
       alignItems="center"
       padding={1.5}
+      sx={{
+        bgcolor: darkMode === 'dark' ? '#25273c' : 'white',
+      }}
     >
       <Link
         href="#"

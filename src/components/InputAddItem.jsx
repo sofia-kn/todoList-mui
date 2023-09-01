@@ -1,9 +1,17 @@
 import Input from "@mui/material/Input";
-import { Button, Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import React from "react";
 
-function InputAddItem({ inputValue, setInputValue, setData, data, onAddItem }) {
+function InputAddItem({
+  inputValue,
+  setInputValue,
+  setData,
+  data,
+  onAddItem,
+  darkMode,
+}) {
   const buttonHandler = () => {
     setData([...data]);
     setInputValue("");
@@ -15,7 +23,6 @@ function InputAddItem({ inputValue, setInputValue, setData, data, onAddItem }) {
       buttonHandler();
     }
   };
- 
 
   return (
     <>
@@ -25,12 +32,12 @@ function InputAddItem({ inputValue, setInputValue, setData, data, onAddItem }) {
           justifyContent: "space-between",
           alignItems: "center",
           flexDirection: "row",
-          bgcolor: "white",
           width: "100%",
           borderRadius: "4px",
           mb: "1rem",
           paddingLeft: "3rem",
-          borderBottom: "2px solid lightgray",
+          bgcolor: darkMode === 'dark' ? '#25273c' : 'white',
+          
         }}
       >
         <div
@@ -47,21 +54,27 @@ function InputAddItem({ inputValue, setInputValue, setData, data, onAddItem }) {
             height={25}
             borderRadius="50%"
             mr={2}
-            border="1px solid gray"
+            border="1px solid #474a60"
             
           ></Typography>
 
           <Input
             placeholder="creat a new todo ..."
+            sx={{
+              color: "#000",
+             
+            }}
             fullWidth={true}
+            
             onChange={(e) => setInputValue(e.target.value)}
             value={inputValue}
             onKeyUp={keyUpHandler}
+            
           ></Input>
         </div>
         <Button
-          color="dark"
-          sx={{ fontSize: "2rem", fontWeight: "700", flexBasis: "20%" }}
+          // color="black"
+          sx={{ fontSize: "2rem", fontWeight: "700", flexBasis: "20%",color: darkMode === 'dark' ? 'white' : '#000', }}
           onClick={buttonHandler}
         >
           +
