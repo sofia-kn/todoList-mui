@@ -137,7 +137,7 @@ function App() {
                   right: "2rem",
                   fontSize: "3.5rem",
                   color: "white",
-                  display: darkMode ? "none" : "block",
+                  display: darkMode === 'dark' ? "none" : "block",
                 }}
               ></NightlightRoundSharpIcon>
 
@@ -146,7 +146,7 @@ function App() {
                   right: "2rem",
                   fontSize: "3.5rem",
                   color: "white",
-                  display: darkMode ? "block" : "none",
+                  display: darkMode === 'dark' ? "block" : "none",
                 }}
               ></LightModeIcon>
             </Box>
