@@ -8,7 +8,11 @@ import NightlightRoundSharpIcon from "@mui/icons-material/NightlightRoundSharp";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import ButtomNavigation from "./components/ButtomNavigation";
 import AddItemList from "./components/AddItemList";
-import axios from "axios";
+import {
+  axiosGet,
+  addItemHandler,
+  clearCompletedHandler,
+} from "../src/utils/index";
 import theme from "./theme";
 // import { createClient } from "@supabase/supabase-js";
 // const supabase = createClient(
@@ -23,52 +27,10 @@ function App() {
   const [status, setStatus] = useState("");
   const [darkMode, setDarkMode] = useState(theme.palette.mode);
 
- 
-
-
-  const axiosGet =async () => {
-    axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
-
-    // let { data: todoList, error } = await supabase.from("todoList").select("*");
-    // setData(todoList);
-  };
-
+  axiosGet(setData);
   useEffect(() => {
-    axiosGet();
+    axiosGet(setData);
   }, []);
-
-  const addItemHandler = () => {
-    axios
-      .post("http://localhost:3031/todos", {
-        inputValue: inputValue,
-        isCompleted: false,
-      })
-      .catch((err) => console.log(err))
-      .then(axiosGet)
-      .then(alert("item added to list"));
-
-    // const { data, error } = await supabase
-    //   .from("todoList")
-    //   .insert([
-    //     {
-    //       value: inputValue,
-
-    //     },
-    //   ])
-
-    //   await axiosGet()
-  };
-
-  const clearCompletedHandler = () => {
-    data.map((dataItem) => {
-      axios.delete("http://localhost:3031/todos/" + dataItem.id).then(axiosGet);
-
-      // const { error } = await supabase
-      // .from("todoList")
-      // .delete('*')
-      // await axiosGet()
-    });
-  };
 
   const dataIsCompletedFilter = data.filter(
     (dataItem) => !dataItem.isCompleted
@@ -76,12 +38,10 @@ function App() {
   const dataStatus = data.filter((item) =>
     status === "" ? item : item.isCompleted == status
   );
-  
-  const darkModeHandler = () => {
 
-    setDarkMode((prevMode) =>
-    prevMode === 'light' ? 'dark' : 'light',
-  )  };
+  const darkModeHandler = () => {
+    setDarkMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+  };
 
   return (
     <Grid
@@ -90,10 +50,8 @@ function App() {
       justifyContent="center"
       alignItems="center"
       sx={(theme) => ({
-        bgcolor:
-          darkMode === "dark" ? "#161722" : "#e4e5f1",
-          color: darkMode === 'dark' ? 'text.secondary' : '',
-          
+        bgcolor: darkMode === "dark" ? "#161722" : "#e4e5f1",
+        color: darkMode === "light" ? "text.secondary" : "white",
       })}
     >
       <Grid
@@ -102,16 +60,18 @@ function App() {
         sx={(theme) => ({
           minHeight: "100vh",
           backgroundImage: {
-            xs: darkMode === 'dark'
-              ? "url('/assets/images/bg-mobile-dark.jpg')"
-              : "url('/assets/images/bg-mobile-light.jpg')",
-            md: darkMode === 'dark'
-              ? "url('/assets/images/bg-desktop-dark.jpg')"
-              : "url('/assets/images/bg-desktop-light.jpg')",
+            xs:
+              darkMode === "dark"
+                ? "url('/assets/images/bg-mobile-dark.jpg')"
+                : "url('/assets/images/bg-mobile-light.jpg')",
+            md:
+              darkMode === "dark"
+                ? "url('/assets/images/bg-desktop-dark.jpg')"
+                : "url('/assets/images/bg-desktop-light.jpg')",
           },
           backgroundRepeat: "no-repeat",
           backgroundSize: "contain",
-          backgroundPosition: "top left",  
+          backgroundPosition: "top left",
           ...theme.typography.body2,
         })}
       >
@@ -131,13 +91,13 @@ function App() {
             >
               todo
             </Typography>
-            <Box onClick={darkModeHandler} sx={{cursor:'pointer'}} >
+            <Box onClick={darkModeHandler} sx={{ cursor: "pointer" }}>
               <NightlightRoundSharpIcon
                 sx={{
                   right: "2rem",
                   fontSize: "3.5rem",
                   color: "white",
-                  display: darkMode === 'dark' ? "none" : "block",
+                  display: darkMode === "dark" ? "none" : "block",
                 }}
               ></NightlightRoundSharpIcon>
 
@@ -146,7 +106,7 @@ function App() {
                   right: "2rem",
                   fontSize: "3.5rem",
                   color: "white",
-                  display: darkMode === 'dark' ? "block" : "none",
+                  display: darkMode === "dark" ? "block" : "none",
                 }}
               ></LightModeIcon>
             </Box>
@@ -156,12 +116,13 @@ function App() {
             setInputValue={setInputValue}
             data={data}
             setData={setData}
-            onAddItem={addItemHandler}
+            onAddItem={() => addItemHandler(inputValue)}
             darkMode={darkMode}
           />
 
           {data.length ? (
-            dataStatus.map((dataItem) => {
+            dataStatus.map((dataItem, i) => {
+              // console.log(dataItem)
               return (
                 <AddItemList
                   data={dataItem}
@@ -171,6 +132,8 @@ function App() {
                   isCompleted={isCompleted}
                   setIsCompleted={setIsCompleted}
                   darkMode={darkMode}
+                  setInputValue={setInputValue}
+                  index={i}
                 />
               );
             })
@@ -178,20 +141,18 @@ function App() {
             <Box
               width="100%"
               height={100}
-            
               display="flex"
               justifyContent="center"
               alignItems="center"
-              
               fontSize={20}
               sx={{
                 boxShadow: "inset 0 0 5px px lightgray",
                 borderTopLeftRadius: "4px",
                 borderTopRightRadius: "4px",
-                bgcolor: darkMode === 'dark' ? '#25273c' : 'white',
+                bgcolor: darkMode === "dark" ? "#25273c" : "white",
                 // borderBottom:"1px solid lighGray",
               }}
-              borderBottom='1px solid lightgray'
+              borderBottom="1px solid lightgray"
             >
               No todo items left!
             </Box>
@@ -208,8 +169,7 @@ function App() {
             sx={{
               borderBottomLeftRadius: "4px",
               borderBottomRightRadius: "4px",
-              bgcolor: darkMode === 'dark' ? '#25273c' : 'white',
-
+              bgcolor: darkMode === "dark" ? "#25273c" : "white",
             }}
           >
             <Typography variant="subtitle1" color="gray.main">
@@ -217,7 +177,7 @@ function App() {
             </Typography>
             <Typography variant="subtitle1">
               <Button
-                onClick={clearCompletedHandler}
+                onClick={() => clearCompletedHandler(data)}
                 color="gray"
                 sx={{ p: "1rem" }}
               >
@@ -225,7 +185,12 @@ function App() {
               </Button>
             </Typography>
           </Box>
-          <ButtomNavigation status={status} setStatus={setStatus} data={data} darkMode={darkMode}/>
+          <ButtomNavigation
+            status={status}
+            setStatus={setStatus}
+            data={data}
+            darkMode={darkMode}
+          />
         </Grid>
       </Grid>
     </Grid>

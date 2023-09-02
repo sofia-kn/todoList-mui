@@ -1,8 +1,8 @@
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
-import ClearIcon from '@mui/icons-material/Clear';
-import EditIcon from '@mui/icons-material/Edit';
+import ClearIcon from "@mui/icons-material/Clear";
+import EditIcon from "@mui/icons-material/Edit";
 import React from "react";
 import axios from "axios";
 // import { createClient } from "@supabase/supabase-js";
@@ -11,7 +11,16 @@ import axios from "axios";
 //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5a3FibWh2dGtjcHl0eWFsZ2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTMyNTEwODgsImV4cCI6MjAwODgyNzA4OH0.g9K0-nobipeTKlouZK6YH9cZwhpLO6RExzmcrdMOVtY"
 // );
 
-function AddItemList({ data, setData, axiosGet, isCompleted, setIsCompleted, darkMode }) {
+function AddItemList({
+  data,
+  setData,
+  axiosGet,
+  isCompleted,
+  setIsCompleted,
+  darkMode,
+  setInputValue,
+  index
+}) {
   // console.log('omad');
   const deleteHandler = () => {
     axios.delete("http://localhost:3031/todos/" + data.id).then(axiosGet);
@@ -44,6 +53,18 @@ function AddItemList({ data, setData, axiosGet, isCompleted, setIsCompleted, dar
     //   await axiosGet
   };
 
+  const editHandler = () => {
+    const editTodos = {
+      inputValue: data.inputValue,
+      id:data.id
+    };
+    axios
+      .put("http://localhost:3031/todos/" + data.id, editTodos)
+      .then((res) => setInputValue(res.data.inputValue))
+
+      
+  };
+
   return (
     <FormControl
       sx={{
@@ -58,7 +79,7 @@ function AddItemList({ data, setData, axiosGet, isCompleted, setIsCompleted, dar
         borderTopRightRadius: "4px",
         borderBottom: "1px solid lightgray",
         paddingLeft: "3rem",
-        bgcolor: darkMode === 'dark' ? '#25273c' : 'white',
+        bgcolor: darkMode === "dark" ? "#25273c" : "white",
       }}
     >
       <div
@@ -84,7 +105,7 @@ function AddItemList({ data, setData, axiosGet, isCompleted, setIsCompleted, dar
             backgroundRepeat: data.isCompleted ? "no-repeat" : "",
             backgroundPosition: data.isCompleted ? "center" : "",
             // transition: " all 500ms ease",
-            opacity:'0.5',
+            opacity: "0.5",
             cursor: "pointer",
           }}
           onClick={completedHandler}
@@ -98,25 +119,15 @@ function AddItemList({ data, setData, axiosGet, isCompleted, setIsCompleted, dar
           >
             {data.inputValue}
           </Typography>
-
         ) : (
           data.inputValue
         )}
       </div>
-      <Button
-      color="gray"
-      // sx={{ fontSize: "2rem", flexBasis: "10%" }}
-      >
-       <EditIcon sx={{margin:'1rem 0'}}></EditIcon>
+      <Button color="gray" onClick={editHandler}>
+        <EditIcon sx={{ margin: "1rem 0" }}></EditIcon>
       </Button>
-      <Button
-        color="gray"
-        // sx={{ fontSize: "2rem", flexBasis: "10%" }}
-        onClick={deleteHandler}
-      >
-        <ClearIcon 
-        sx={{margin:'1rem 0'}}
-        ></ClearIcon>
+      <Button color="gray" onClick={deleteHandler}>
+        <ClearIcon sx={{ margin: "1rem 0" }}></ClearIcon>
       </Button>
     </FormControl>
   );

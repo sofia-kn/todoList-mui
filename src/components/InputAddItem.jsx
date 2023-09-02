@@ -36,8 +36,7 @@ function InputAddItem({
           borderRadius: "4px",
           mb: "1rem",
           paddingLeft: "3rem",
-          bgcolor: darkMode === 'dark' ? '#25273c' : 'white',
-          
+          bgcolor: darkMode === "dark" ? "#25273c" : "white",
         }}
       >
         <div
@@ -55,26 +54,26 @@ function InputAddItem({
             borderRadius="50%"
             mr={2}
             border="1px solid #474a60"
-            
           ></Typography>
 
           <Input
             placeholder="creat a new todo ..."
             sx={{
-              color: "#000",
-             
+              color: darkMode === "light" ? "text.secondary" : "white",
             }}
             fullWidth={true}
-            
             onChange={(e) => setInputValue(e.target.value)}
             value={inputValue}
             onKeyUp={keyUpHandler}
-            
           ></Input>
         </div>
         <Button
-          // color="black"
-          sx={{ fontSize: "2rem", fontWeight: "700", flexBasis: "20%",color: darkMode === 'dark' ? 'white' : '#000', }}
+          sx={{
+            fontSize: "2rem",
+            fontWeight: "700",
+            flexBasis: "20%",
+            color: darkMode === "dark" ? "white" : "#000",
+          }}
           onClick={buttonHandler}
         >
           +
