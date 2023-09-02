@@ -10,7 +10,6 @@ import ButtomNavigation from "./components/ButtomNavigation";
 import AddItemList from "./components/AddItemList";
 import axios from "axios";
 import theme from "./theme";
-
 // import { createClient } from "@supabase/supabase-js";
 // const supabase = createClient(
 //   "https://bykqbmhvtkcpytyalgbz.supabase.co",
@@ -27,7 +26,7 @@ function App() {
  
 
 
-  const axiosGet = () => {
+  const axiosGet =async () => {
     axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
 
     // let { data: todoList, error } = await supabase.from("todoList").select("*");

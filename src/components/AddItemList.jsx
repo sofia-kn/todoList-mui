@@ -1,6 +1,8 @@
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
+import ClearIcon from '@mui/icons-material/Clear';
+import EditIcon from '@mui/icons-material/Edit';
 import React from "react";
 import axios from "axios";
 // import { createClient } from "@supabase/supabase-js";
@@ -51,6 +53,7 @@ function AddItemList({ data, setData, axiosGet, isCompleted, setIsCompleted, dar
         flexDirection: "row",
         bgcolor: "white",
         width: "100%",
+        // p:'1.2rem 0',
         borderTopLeftRadius: "4px",
         borderTopRightRadius: "4px",
         borderBottom: "1px solid lightgray",
@@ -101,11 +104,19 @@ function AddItemList({ data, setData, axiosGet, isCompleted, setIsCompleted, dar
         )}
       </div>
       <Button
+      color="gray"
+      // sx={{ fontSize: "2rem", flexBasis: "10%" }}
+      >
+       <EditIcon sx={{margin:'1rem 0'}}></EditIcon>
+      </Button>
+      <Button
         color="gray"
-        sx={{ fontSize: "2rem", flexBasis: "20%" }}
+        // sx={{ fontSize: "2rem", flexBasis: "10%" }}
         onClick={deleteHandler}
       >
-        x
+        <ClearIcon 
+        sx={{margin:'1rem 0'}}
+        ></ClearIcon>
       </Button>
     </FormControl>
   );
