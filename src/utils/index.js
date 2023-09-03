@@ -1,12 +1,6 @@
 import axios from "axios";
-const axiosGet = async (setData) => {
-//   axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
 
 
-
-  // let { data: todoList, error } = await supabase.from("todoList").select("*");
-  // setData(todoList);
-};
 const addItemHandler = (inputValue) => {
   axios
     .post("http://localhost:3031/todos", {
@@ -39,4 +33,5 @@ const clearCompletedHandler = (data) => {
     // await axiosGet()
   });
 };
-export { axiosGet, addItemHandler, clearCompletedHandler };
+export {  addItemHandler, clearCompletedHandler };
+

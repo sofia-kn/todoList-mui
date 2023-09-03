@@ -1,29 +1,13 @@
 {
   "todos": [
     {
-      "inputValue": "react",
-      "isCompleted": false,
+      "inputValue": "html54455",
       "id": 1
     },
     {
-      "inputValue": "html",
+      "inputValue": "css",
       "isCompleted": false,
       "id": 2
-    },
-    {
-      "inputValue": "hkjk",
-      "isCompleted": false,
-      "id": 3
-    },
-    {
-      "inputValue": "yh",
-      "isCompleted": false,
-      "id": 4
-    },
-    {
-      "inputValue": "ccc",
-      "isCompleted": false,
-      "id": 5
     }
   ]
 }

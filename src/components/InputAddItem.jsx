@@ -3,20 +3,42 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import React from "react";
+import axios from "axios";
 
 function InputAddItem({
   inputValue,
   setInputValue,
-  setData,
   data,
   onAddItem,
   darkMode,
+  editTodo,
+  setEditTodo,
+  axiosGet,
 }) {
-  const buttonHandler = () => {
-    setData([...data]);
-    setInputValue("");
+  const updateTodo = () => {
+    const editTodos = {
+      inputValue: inputValue,
+      isCompleted: data.isCompleted,
+      id: editTodo,
+    };
+    axios
+      .put("http://localhost:3031/todos/" + editTodo, editTodos)
+      .then(axiosGet)
+      .then(setInputValue(""));
+  };
 
-    onAddItem();
+  const buttonHandler = () => {
+    if (!editTodo) {
+      // setData([...data]);
+      setInputValue("");
+      onAddItem();
+      console.log("edit nist");
+    } else {
+      setEditTodo("");
+      updateTodo();
+
+      console.log("edit hast");
+    }
   };
   const keyUpHandler = (e) => {
     if (e.keyCode === 13) {

@@ -18,8 +18,10 @@ function AddItemList({
   isCompleted,
   setIsCompleted,
   darkMode,
+  editTodo,
+  setEditTodo,
   setInputValue,
-  index
+  inputValue,
 }) {
   // console.log('omad');
   const deleteHandler = () => {
@@ -54,17 +56,9 @@ function AddItemList({
   };
 
   const editHandler = () => {
-    const editTodos = {
-      inputValue: data.inputValue,
-      id:data.id
-    };
-    axios
-      .put("http://localhost:3031/todos/" + data.id, editTodos)
-      .then((res) => setInputValue(res.data.inputValue))
-
-      
+    setInputValue(data.inputValue);
+    setEditTodo(data.id);
   };
-
   return (
     <FormControl
       sx={{

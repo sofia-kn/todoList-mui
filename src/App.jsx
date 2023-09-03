@@ -8,11 +8,8 @@ import NightlightRoundSharpIcon from "@mui/icons-material/NightlightRoundSharp";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import ButtomNavigation from "./components/ButtomNavigation";
 import AddItemList from "./components/AddItemList";
-import {
-  axiosGet,
-  addItemHandler,
-  clearCompletedHandler,
-} from "../src/utils/index";
+// import { addItemHandler, clearCompletedHandler } from "../src/utils/index";
+import axios from "axios";
 import theme from "./theme";
 // import { createClient } from "@supabase/supabase-js";
 // const supabase = createClient(
@@ -25,12 +22,52 @@ function App() {
   const [data, setData] = useState([]);
   const [isCompleted, setIsCompleted] = useState(false);
   const [status, setStatus] = useState("");
+  const [editTodo, setEditTodo] = useState(null);
   const [darkMode, setDarkMode] = useState(theme.palette.mode);
 
-  axiosGet(setData);
+  const axiosGet = () => {
+    axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
+
+    // let { data: todoList, error } = await supabase.from("todoList").select("*");
+    // // setData(todoList);
+    // console.log(todoList);
+  };
   useEffect(() => {
-    axiosGet(setData);
+    axiosGet();
   }, []);
+
+  const addItemHandler = (inputValue) => {
+    axios
+      .post("http://localhost:3031/todos", {
+        inputValue: inputValue,
+        isCompleted: false,
+      })
+      .catch((err) => console.log(err))
+      .then(axiosGet)
+      .then(alert("item added to list"));
+  
+    // const { data, error } = await supabase
+    //   .from("todoList")
+    //   .insert([
+    //     {
+    //       value: inputValue,
+  
+    //     },
+    //   ])
+  
+    //   await axiosGet()
+  };
+  
+  const clearCompletedHandler = (data) => {
+    data.map((dataItem) => {
+      axios.delete("http://localhost:3031/todos/" + dataItem.id).then(axiosGet);
+  
+      // const { error } = await supabase
+      // .from("todoList")
+      // .delete('*')
+      // await axiosGet()
+    });
+  };
 
   const dataIsCompletedFilter = data.filter(
     (dataItem) => !dataItem.isCompleted
@@ -115,14 +152,16 @@ function App() {
             inputValue={inputValue}
             setInputValue={setInputValue}
             data={data}
-            setData={setData}
             onAddItem={() => addItemHandler(inputValue)}
             darkMode={darkMode}
+            editTodo={editTodo}
+            setEditTodo={setEditTodo}
+            axiosGet={axiosGet}
           />
 
           {data.length ? (
-            dataStatus.map((dataItem, i) => {
-              // console.log(dataItem)
+            dataStatus.map((dataItem) => {
+             
               return (
                 <AddItemList
                   data={dataItem}
@@ -133,7 +172,10 @@ function App() {
                   setIsCompleted={setIsCompleted}
                   darkMode={darkMode}
                   setInputValue={setInputValue}
-                  index={i}
+                  editTodo={editTodo}
+                  setEditTodo={setEditTodo}
+                  inputValue={inputValue}
+                  
                 />
               );
             })
