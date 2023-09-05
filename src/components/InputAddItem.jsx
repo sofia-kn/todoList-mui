@@ -4,6 +4,11 @@ import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import React from "react";
 import axios from "axios";
+import { createClient } from "@supabase/supabase-js";
+const supabase = createClient(
+  "https://bykqbmhvtkcpytyalgbz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5a3FibWh2dGtjcHl0eWFsZ2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTMyNTEwODgsImV4cCI6MjAwODgyNzA4OH0.g9K0-nobipeTKlouZK6YH9cZwhpLO6RExzmcrdMOVtY"
+);
 
 function InputAddItem({
   inputValue,
@@ -15,16 +20,29 @@ function InputAddItem({
   setEditTodo,
   axiosGet,
 }) {
-  const updateTodo = () => {
-    const editTodos = {
-      inputValue: inputValue,
-      isCompleted: data.isCompleted,
-      id: editTodo,
-    };
-    axios
-      .put("http://localhost:3031/todos/" + editTodo, editTodos)
-      .then(axiosGet)
-      .then(setInputValue(""));
+  const updateTodo = async () => {
+    // const editTodos = {
+    //   inputValue: inputValue,
+    //   isCompleted: data.isCompleted,
+    //   id: editTodo,
+    // };
+    // axios
+    //   .put("http://localhost:3031/todos/" + editTodo, editTodos)
+    //   .then(axiosGet)
+    //   .then(setInputValue(""));
+
+    const { error } = await supabase
+      .from("todolist")
+      .update({
+        inputValue: inputValue,
+        isCompleted: data.isCompleted,
+        // id: editTodo,
+      })
+      .eq("id", editTodo)
+      // .select();
+
+      await axiosGet()
+      await setInputValue('')
   };
 
   const buttonHandler = () => {

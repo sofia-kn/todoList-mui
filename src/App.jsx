@@ -11,11 +11,11 @@ import AddItemList from "./components/AddItemList";
 // import { addItemHandler, clearCompletedHandler } from "../src/utils/index";
 import axios from "axios";
 import theme from "./theme";
-// import { createClient } from "@supabase/supabase-js";
-// const supabase = createClient(
-//   "https://bykqbmhvtkcpytyalgbz.supabase.co",
-//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5a3FibWh2dGtjcHl0eWFsZ2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTMyNTEwODgsImV4cCI6MjAwODgyNzA4OH0.g9K0-nobipeTKlouZK6YH9cZwhpLO6RExzmcrdMOVtY"
-// );
+import { createClient } from "@supabase/supabase-js";
+const supabase = createClient(
+  "https://bykqbmhvtkcpytyalgbz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5a3FibWh2dGtjcHl0eWFsZ2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTMyNTEwODgsImV4cCI6MjAwODgyNzA4OH0.g9K0-nobipeTKlouZK6YH9cZwhpLO6RExzmcrdMOVtY"
+);
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -25,48 +25,52 @@ function App() {
   const [editTodo, setEditTodo] = useState(null);
   const [darkMode, setDarkMode] = useState(theme.palette.mode);
 
-  const axiosGet = () => {
-    axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
+  const axiosGet = async() => {
+    // axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
 
-    // let { data: todoList, error } = await supabase.from("todoList").select("*");
-    // // setData(todoList);
-    // console.log(todoList);
+    let { data:todolist, error} = await supabase.from("todolist").select("*");
+    setData(todolist);
+    console.log(todolist);
   };
   useEffect(() => {
     axiosGet();
   }, []);
 
-  const addItemHandler = (inputValue) => {
-    axios
-      .post("http://localhost:3031/todos", {
-        inputValue: inputValue,
-        isCompleted: false,
-      })
-      .catch((err) => console.log(err))
-      .then(axiosGet)
-      .then(alert("item added to list"));
-  
-    // const { data, error } = await supabase
-    //   .from("todoList")
-    //   .insert([
-    //     {
-    //       value: inputValue,
-  
-    //     },
-    //   ])
-  
-    //   await axiosGet()
+  const addItemHandler = async (inputValue) => {
+    // axios
+    //   .post("http://localhost:3031/todos", {
+    //     inputValue: inputValue,
+    //     isCompleted: false,
+    //   })
+    //   .catch((err) => console.log(err))
+    //   .then(axiosGet)
+    //   .then(alert("item added to list"));
+
+    const { data, error } = await supabase
+      .from("todolist")
+      .insert([
+        {
+          inputValue: inputValue,
+          isCompleted: isCompleted,
+          
+        },
+      ])
+
+      await axiosGet()
   };
-  
-  const clearCompletedHandler = (data) => {
-    data.map((dataItem) => {
-      axios.delete("http://localhost:3031/todos/" + dataItem.id).then(axiosGet);
-  
-      // const { error } = await supabase
-      // .from("todoList")
-      // .delete('*')
-      // await axiosGet()
-    });
+
+  const clearCompletedHandler = async(data) => {
+    // data.map((dataItem) => {
+    //   axios.delete("http://localhost:3031/todos/" + dataItem.id).then(axiosGet);
+
+    // });
+    
+
+    const { error } = await supabase
+    .from("todolist")
+    .delete()
+    .eq(' isCompleted' , true)
+    await axiosGet()
   };
 
   const dataIsCompletedFilter = data.filter(
@@ -161,7 +165,6 @@ function App() {
 
           {data.length ? (
             dataStatus.map((dataItem) => {
-             
               return (
                 <AddItemList
                   data={dataItem}
@@ -175,7 +178,6 @@ function App() {
                   editTodo={editTodo}
                   setEditTodo={setEditTodo}
                   inputValue={inputValue}
-                  
                 />
               );
             })

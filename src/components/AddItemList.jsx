@@ -5,11 +5,11 @@ import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
 import React from "react";
 import axios from "axios";
-// import { createClient } from "@supabase/supabase-js";
-// const supabase = createClient(
-//   "https://bykqbmhvtkcpytyalgbz.supabase.co",
-//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5a3FibWh2dGtjcHl0eWFsZ2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTMyNTEwODgsImV4cCI6MjAwODgyNzA4OH0.g9K0-nobipeTKlouZK6YH9cZwhpLO6RExzmcrdMOVtY"
-// );
+import { createClient } from "@supabase/supabase-js";
+const supabase = createClient(
+  "https://bykqbmhvtkcpytyalgbz.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5a3FibWh2dGtjcHl0eWFsZ2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTMyNTEwODgsImV4cCI6MjAwODgyNzA4OH0.g9K0-nobipeTKlouZK6YH9cZwhpLO6RExzmcrdMOVtY"
+);
 
 function AddItemList({
   data,
@@ -24,35 +24,35 @@ function AddItemList({
   inputValue,
 }) {
   // console.log('omad');
-  const deleteHandler = () => {
-    axios.delete("http://localhost:3031/todos/" + data.id).then(axiosGet);
+  const deleteHandler = async () => {
+    // axios.delete("http://localhost:3031/todos/" + data.id).then(axiosGet);
 
-    // const { error } = await supabase
-    //   .from("todoList")
-    //   .delete()
-    //   .eq("id", data.id);
+    const { error } = await supabase
+      .from("todolist")
+      .delete()
+      .eq("id", data.id);
 
-    //   await axiosGet
+    await axiosGet();
   };
 
-  const completedHandler = () => {
+  const completedHandler = async () => {
     // setIsCompleted((current) => !current);
 
-    const dataEdited = {
-      inputValue: data.inputValue,
-      isCompleted: !data.isCompleted,
-    };
+    // const dataEdited = {
+    //   inputValue: data.inputValue,
+    //   isCompleted: !data.isCompleted,
+    // };
 
-    axios
-      .put("http://localhost:3031/todos/" + data.id, dataEdited)
-      .then(axiosGet);
+    // axios
+    //   .put("http://localhost:3031/todos/" + data.id, dataEdited)
+    //   .then(axiosGet);
 
-    // const { data, error } = await supabase
-    //   .from("todoList")
-    //   .update({ isCompleted: !isCompleted })
-    //   .eq("id", data.id)
+    const {  error } = await supabase
+      .from("todolist")
+      .update({ inputValue: data.inputValue, isCompleted: !data.isCompleted })
+      .eq("id", data.id);
 
-    //   await axiosGet
+    await axiosGet();
   };
 
   const editHandler = () => {
