@@ -4,7 +4,6 @@ import FormControl from "@mui/material/FormControl";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
 import React from "react";
-import axios from "axios";
 import { createClient } from "@supabase/supabase-js";
 const supabase = createClient(
   "https://bykqbmhvtkcpytyalgbz.supabase.co",
@@ -13,17 +12,11 @@ const supabase = createClient(
 
 function AddItemList({
   data,
-  setData,
   axiosGet,
-  isCompleted,
-  setIsCompleted,
   darkMode,
-  editTodo,
   setEditTodo,
   setInputValue,
-  inputValue,
 }) {
-  // console.log('omad');
   const deleteHandler = async () => {
     // axios.delete("http://localhost:3031/todos/" + data.id).then(axiosGet);
 
@@ -47,7 +40,7 @@ function AddItemList({
     //   .put("http://localhost:3031/todos/" + data.id, dataEdited)
     //   .then(axiosGet);
 
-    const {  error } = await supabase
+    const { error } = await supabase
       .from("todolist")
       .update({ inputValue: data.inputValue, isCompleted: !data.isCompleted })
       .eq("id", data.id);
@@ -68,7 +61,6 @@ function AddItemList({
         flexDirection: "row",
         bgcolor: "white",
         width: "100%",
-        // p:'1.2rem 0',
         borderTopLeftRadius: "4px",
         borderTopRightRadius: "4px",
         borderBottom: "1px solid lightgray",
@@ -92,13 +84,11 @@ function AddItemList({
           mr={2}
           border="1px solid gray"
           sx={{
-            // background: isCompleted ? 'url("/assets/images/icon-check.svg"), linear-gradient(#57ddff, #c058f3) ,no-repeat ,center' : ''
             backgroundImage: data.isCompleted
               ? 'url("/assets/images/icon-check.svg"), linear-gradient(#57ddff, #c058f3)'
               : "",
             backgroundRepeat: data.isCompleted ? "no-repeat" : "",
             backgroundPosition: data.isCompleted ? "center" : "",
-            // transition: " all 500ms ease",
             opacity: "0.5",
             cursor: "pointer",
           }}

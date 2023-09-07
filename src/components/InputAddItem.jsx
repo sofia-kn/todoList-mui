@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import React from "react";
-import axios from "axios";
 import { createClient } from "@supabase/supabase-js";
 const supabase = createClient(
   "https://bykqbmhvtkcpytyalgbz.supabase.co",

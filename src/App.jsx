@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
@@ -8,8 +8,6 @@ import NightlightRoundSharpIcon from "@mui/icons-material/NightlightRoundSharp";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import ButtomNavigation from "./components/ButtomNavigation";
 import AddItemList from "./components/AddItemList";
-// import { addItemHandler, clearCompletedHandler } from "../src/utils/index";
-import axios from "axios";
 import theme from "./theme";
 import { createClient } from "@supabase/supabase-js";
 const supabase = createClient(
@@ -25,12 +23,12 @@ function App() {
   const [editTodo, setEditTodo] = useState(null);
   const [darkMode, setDarkMode] = useState(theme.palette.mode);
 
-  const axiosGet = async() => {
+  const axiosGet = async () => {
     // axios.get("http://localhost:3031/todos").then((res) => setData(res.data));
 
-    let { data:todolist, error} = await supabase.from("todolist").select("*");
+    let { data: todolist, error } = await supabase.from("todolist").select("*").order("id", { ascending: false });;
     setData(todolist);
-    console.log(todolist);
+    // console.log(todolist);
   };
   useEffect(() => {
     axiosGet();
@@ -46,31 +44,27 @@ function App() {
     //   .then(axiosGet)
     //   .then(alert("item added to list"));
 
-    const { data, error } = await supabase
-      .from("todolist")
-      .insert([
-        {
-          inputValue: inputValue,
-          isCompleted: isCompleted,
-          
-        },
-      ])
+    const { data, error } = await supabase.from("todolist").insert([
+      {
+        inputValue: inputValue,
+        isCompleted: isCompleted,
+      },
+    ]);
 
-      await axiosGet()
+    await axiosGet();
   };
 
-  const clearCompletedHandler = async(data) => {
+  const clearCompletedHandler = async (data) => {
     // data.map((dataItem) => {
     //   axios.delete("http://localhost:3031/todos/" + dataItem.id).then(axiosGet);
 
     // });
-    
 
     const { error } = await supabase
-    .from("todolist")
-    .delete()
-    .eq(' isCompleted' , true)
-    await axiosGet()
+      .from("todolist")
+      .delete()
+      .eq(" isCompleted", true);
+    await axiosGet();
   };
 
   const dataIsCompletedFilter = data.filter(
@@ -113,7 +107,6 @@ function App() {
           backgroundRepeat: "no-repeat",
           backgroundSize: "contain",
           backgroundPosition: "top left",
-          ...theme.typography.body2,
         })}
       >
         <Grid item md={6} lg={4.5} margin="0 auto" padding={{ xs: "2.5rem" }}>
@@ -169,15 +162,10 @@ function App() {
                 <AddItemList
                   data={dataItem}
                   key={dataItem.id}
-                  setData={setData}
                   axiosGet={axiosGet}
-                  isCompleted={isCompleted}
-                  setIsCompleted={setIsCompleted}
                   darkMode={darkMode}
                   setInputValue={setInputValue}
-                  editTodo={editTodo}
                   setEditTodo={setEditTodo}
-                  inputValue={inputValue}
                 />
               );
             })
@@ -194,7 +182,6 @@ function App() {
                 borderTopLeftRadius: "4px",
                 borderTopRightRadius: "4px",
                 bgcolor: darkMode === "dark" ? "#25273c" : "white",
-                // borderBottom:"1px solid lighGray",
               }}
               borderBottom="1px solid lightgray"
             >
