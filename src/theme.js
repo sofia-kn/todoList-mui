@@ -20,6 +20,7 @@ const theme = createTheme({
          color:'#000'
           
         },
+        
         "@font-face": {
           fontFamily: "Roboto",
           fontStyle: "normal",
@@ -45,7 +46,7 @@ const theme = createTheme({
       main: "#777a92",
     },
     black: {
-      main: "#161722",
+      main: "#161722", 
       inputColor: "#25273c",
     },
   },
